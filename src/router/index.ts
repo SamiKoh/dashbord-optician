@@ -19,6 +19,13 @@ const routes: Array<RouteConfig> = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
+  {
+    path: "/ophth",
+    name: "Ophth",
+    
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Ophth.vue"),
+  },
 ];
 
 const router = new VueRouter({
