@@ -71,10 +71,17 @@
                 ><div class="align-middle">Fundusphoto</div></b-col
               >
               <b-col class="m-1"
-                ><img src="/left-fundus.png" height="300px" width="300px"
+                ><img
+                  :src="`${publicPath}left-fundus.jpg`"
+                  height="300px"
+                  width="300px"
               /></b-col>
               <b-col class="m-1">
-                <img src="/right-fundus.png" height="300px" width="300px" />
+                <img
+                  :src="`${publicPath}right-fundus.png`"
+                  height="300px"
+                  width="300px"
+                />
               </b-col>
             </b-row>
             <b-row style="">
@@ -88,7 +95,7 @@
                 ><b-form-file style=""></b-form-file
               ></b-col>
               <b-col class="img-drop m-1"
-                ><b-form-file  style=""></b-form-file
+                ><b-form-file style=""></b-form-file
               ></b-col>
             </b-row>
           </b-form>
@@ -128,6 +135,7 @@
 export default {
   data: () => ({
     uploaded: false,
+    publicPath:process.env.BASE_URL,
     customerselection: true,
     customers: [
       { name: "John Doe", date_of_birth: "4.6.1985", id: "38919" },
@@ -139,6 +147,6 @@ export default {
 
 <style lang="css">
 .img-drop {
- /*  background-color: lightgray; */
+  /*  background-color: lightgray; */
 }
 </style>

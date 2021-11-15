@@ -1,5 +1,5 @@
 <template>
-  <b-card header="Results">
+  <b-card header="Results" class="mb-5">
     <b-carousel
       id="carousel-1"
       v-model="slide"
@@ -15,20 +15,20 @@
     >
       <b-carousel-slide caption="Fundusphoto">
         <template #img>
-          <img src="/left-fundus.jpg" style="width:50%; height90%;" />
-          <img src="/right-fundus.png" style="width:50%; height90%;" />
+          <img :src="`${publicPath}left-fundus.jpg`" style="width:50%; height90%;" />
+          <img :src="`${publicPath}right-fundus.png`" style="width:50%; height90%;" />
         </template>
       </b-carousel-slide>
       <b-carousel-slide caption="Oct scan">
         <template #img>
-          <img src="/oct-left.png" style="width:50%; height90%;" />
-          <img src="/oct-right.png" style="width:50%; height90%;" />
+          <img :src="`${publicPath}oct-left.png`" style="width:50%; height90%;" />
+          <img :src="`${publicPath}oct-right.png`" style="width:50%; height90%;" />
         </template>
       </b-carousel-slide>
       <b-carousel-slide caption="Visualfield">
         <template #img>
-          <img src="/view-left.png" style="width:50%; height90%;" />
-          <img src="/view-right.png" style="width:50%; height90%;" />
+          <img :src="`${publicPath}view-left.png`" style="width:50%; height90%;" />
+          <img :src="`${publicPath}view-right.png`" style="width:50%; height90%;" />
         </template>
       </b-carousel-slide>
     </b-carousel>
@@ -110,6 +110,7 @@ export default {
       dip: "",
       vfield: "",
       today: "",
+      publicPath: process.env.BASE_URL,
       name: "Dr. John Lowe",
     };
   },

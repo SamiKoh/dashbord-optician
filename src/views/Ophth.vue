@@ -6,9 +6,7 @@
           <!-- <h4>Personal options</h4> -->
           <b-list-group flush>
             <b-list-group-item>Personal information</b-list-group-item>
-            <b-list-group-item
-              style="cursor: pointer"
-              @click="mode = 'cs'"
+            <b-list-group-item style="cursor: pointer" @click="mode = 'cs'"
               >Select customer</b-list-group-item
             >
             <b-list-group-item>
@@ -26,11 +24,13 @@
           </b-list-group>
         </b-card>
 
-        <b-card class="m-0 mt-2 p-0" header="Selected customer" v-if="mode != 'cs'">
+        <b-card
+          class="m-0 mt-2 p-0"
+          header="Selected customer"
+          v-if="mode != 'cs'"
+        >
           <b-list-group flush>
-            <b-list-group-item >
-              <b>Name:</b> John Doe
-            </b-list-group-item>
+            <b-list-group-item> <b>Name:</b> John Doe </b-list-group-item>
             <b-list-group-item><b>Id:</b> 38919</b-list-group-item>
 
             <b-list-group flush>
@@ -53,7 +53,8 @@
         <Results v-if="mode == 'results'"> Testi</Results>
 
         <b-card
-          v-if="mode =='img' || mode == 'gi'"
+          class="mb-5"
+          v-if="mode == 'img' || mode == 'gi'"
           :header="mode == 'img' ? 'Images' : 'General Information'"
         >
           <b-form>
@@ -78,39 +79,43 @@
                   <b-button>Review</b-button>
                 </b-col>
                 <b-col class="m-1"
-                  ><img src="/left-fundus.png" height="300px" width="300px"
+                  ><img :src="`${publicPath}left-fundus.jpg`" height="300px" width="300px"
                 /></b-col>
                 <b-col class="m-1">
-                  <img src="/right-fundus.png" height="300px" width="300px" />
+                  <img :src="`${publicPath}right-fundus.png`" height="300px" width="300px" />
                 </b-col>
               </b-row>
               <b-row style="min-height: 300px">
                 <b-col>Oct scan <b-button>Review</b-button></b-col>
 
                 <b-col class="m-1"
-                  ><img src="/oct-left.png" height="300px" width="300px" />
+                  ><img :src="`${publicPath}oct-left.png`" height="300px" width="300px" />
                 </b-col>
                 <b-col class="m-1"
-                  ><img src="/oct-right.png" height="300px" width="300px" />
+                  ><img :src="`${publicPath}oct-right.png`" height="300px" width="300px" />
                 </b-col>
               </b-row>
               <b-row style="min-height: 300px mb-3">
                 <b-col>Visualfield <b-button>Review</b-button></b-col>
                 <b-col class="m-1">
-                  <img src="/view-left.png" height="300px" width="300px" />
+                  <img :src="`${publicPath}view-left.png`" height="300px" width="300px" />
                 </b-col>
                 <b-col class="m-1"
-                  ><img src="/view-right.png" height="300px" width="300px"
+                  ><img :src="`${publicPath}view-right.png`" height="300px" width="300px"
                 /></b-col>
               </b-row>
               <!-- <b-form-group label="Comments">
                 <b-textarea></b-textarea>
               </b-form-group> -->
 
-              <b-button variant="info" class="mr-3"
-                >Ask for more information</b-button
-              >
-              <b-button variant="success">Go to results</b-button>
+              <b-form-row class="mt-3 justify-content-center">
+                <b-button variant="info" class="mr-3"
+                  >Ask for more information</b-button
+                >
+                <b-button @click="mode = 'results'" variant="success"
+                  >Go to results</b-button
+                >
+              </b-form-row>
             </div>
             <div v-else>
               Is the visual acuity 0.7 (6/9 or 20/30) or better on each eye?
@@ -153,10 +158,7 @@
 
           <b-table :items="customers">
             <template #cell(name)="data">
-              <div
-                @click="mode = 'img'"
-                style="cursor: pointer"
-              >
+              <div @click="mode = 'img'" style="cursor: pointer">
                 {{ data.value }}
               </div>
             </template>
@@ -175,8 +177,9 @@ export default {
   components: { Results },
   data: () => ({
     uploaded: false,
-    customerselection: '38919',
+    customerselection: "38919",
     images: false,
+    publicPath:process.env.BASE_URL,
     mode: "cs",
     customers: [
       { name: "John Doe", date_of_birth: "4.6.1985", id: "38919" },
@@ -184,8 +187,6 @@ export default {
       { name: "Mallie Koelpin", date_of_birth: "13.3.1973", id: "81141" },
     ],
   }),
-  computed:{
-    
-  }
+  computed: {},
 };
 </script>
