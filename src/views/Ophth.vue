@@ -30,8 +30,10 @@
           v-if="mode != 'cs'"
         >
           <b-list-group flush>
-            <b-list-group-item> <b>Name:</b> John Doe </b-list-group-item>
-            <b-list-group-item><b>Id:</b> 38919</b-list-group-item>
+            <b-list-group-item>
+              <b>Name:</b> {{ customer.name }}
+            </b-list-group-item>
+            <b-list-group-item><b>Id:</b> {{ customer.id }}</b-list-group-item>
 
             <b-list-group flush>
               <b-list-group-item style="cursor: pointer" @click="mode = 'gi'"
@@ -144,7 +146,6 @@
         </b-card>
         <b-card v-if="mode == 'cs'">
           <b-card-title>Customer selection</b-card-title>
-
           <b-form-row class="mb-3">
             <b-form-input
               size="sm"
@@ -158,7 +159,13 @@
 
           <b-table :items="customers">
             <template #cell(name)="data">
-              <div @click="mode = 'img'" style="cursor: pointer">
+              <div
+                @click="
+                  mode = 'img';
+                  selectCustomer(data);
+                "
+                class="pointer"
+              >
                 {{ data.value }}
               </div>
             </template>
@@ -177,16 +184,32 @@ export default {
   components: { Results },
   data: () => ({
     uploaded: false,
-    customerselection: "38919",
+    customerselection: "",
     images: false,
-    publicPath:process.env.BASE_URL,
+    publicPath: process.env.BASE_URL,
     mode: "cs",
     customers: [
       { name: "John Doe", date_of_birth: "4.6.1985", id: "38919" },
       { name: "Zula Rosenbaum", date_of_birth: "8.5.1989", id: "52952" },
+      { name: "Thomas Morar", date_of_birth: "18.2.1997", id: "36493" },
+      { name: "Jacynthe Smitham", date_of_birth: "6.9.1968", id: "13327" },
+      { name: "Linda Farrell", date_of_birth: "14.12.1991", id: "75141" },
       { name: "Mallie Koelpin", date_of_birth: "13.3.1973", id: "81141" },
     ],
   }),
-  computed: {},
+  methods: {
+    selectCustomer(data) {
+      console.log(data);
+      this.customerselection = data.item.id;
+    },
+  },
+  computed: {
+    customer() {
+      let c = this.customers.find((c) => (c.id == this.customerselection));
+      console.log("searching customer with id ", this.customerselection, c)
+      if (c) return c;
+      else return this.customers[0];
+    },
+  },
 };
 </script>
