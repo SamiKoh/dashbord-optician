@@ -77,18 +77,18 @@
                 <img src="/right-fundus.png" height="300px" width="300px" />
               </b-col>
             </b-row>
-            <b-row style="min-height: 300px">
+            <b-row style="">
               <b-col>Oct scan</b-col>
               <b-col class="img-drop m-1"> Drop image here </b-col>
               <b-col class="img-drop m-1"> Drop image here </b-col>
             </b-row>
-            <b-row style="min-height: 300px">
+            <b-row style="">
               <b-col>Visualfield</b-col>
               <b-col class="img-drop m-1"
                 ><b-form-file style=""></b-form-file
               ></b-col>
               <b-col class="img-drop m-1"
-                ><b-form-file style=""></b-form-file
+                ><b-form-file  style=""></b-form-file
               ></b-col>
             </b-row>
           </b-form>
@@ -139,6 +139,6 @@ export default {
 
 <style lang="css">
 .img-drop {
-  background-color: lightgray;
+ /*  background-color: lightgray; */
 }
 </style>

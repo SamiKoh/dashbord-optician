@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <b-navbar toggleable="lg" type="dark" variant="info">
-      <img src="https://www.ndls.ie/images/logo.webp" style="height: 50px" />
+      <img src="https://www.ndls.ie/images/logo.webp" style="height: 70px" />
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -42,6 +42,8 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
+
+    <div class="mt-3"></div>
     <div id="nav">
       <router-link to="/">Customer form</router-link> |
       <router-link to="/about">Optician upload</router-link> |

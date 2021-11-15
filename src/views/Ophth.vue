@@ -8,7 +8,7 @@
             <b-list-group-item>Personal information</b-list-group-item>
             <b-list-group-item
               style="cursor: pointer"
-              @click="customerselection = !customerselection"
+              @click="mode = 'cs'"
               >Select customer</b-list-group-item
             >
             <b-list-group-item>
@@ -26,32 +26,35 @@
           </b-list-group>
         </b-card>
 
-        <b-card class="m-0 mt-2 p-0" header="Selected customer">
+        <b-card class="m-0 mt-2 p-0" header="Selected customer" v-if="mode != 'cs'">
           <b-list-group flush>
-            <b-list-group-item v-if="customerselection">
+            <b-list-group-item >
               <b>Name:</b> John Doe
             </b-list-group-item>
             <b-list-group-item><b>Id:</b> 38919</b-list-group-item>
 
-            <!-- <div v-if="customerselection" style="margin-left: 50px"> -->
             <b-list-group flush>
-              <b-list-group-item style="cursor: pointer" @click="images = false"
+              <b-list-group-item style="cursor: pointer" @click="mode = 'gi'"
                 >General information</b-list-group-item
               >
-              <b-list-group-item style="cursor: pointer" @click="images = true"
+              <b-list-group-item style="cursor: pointer" @click="mode = 'img'"
                 >Images</b-list-group-item
               >
-              <b-list-group-item>Results</b-list-group-item>
+              <b-list-group-item
+                style="cursor: pointer"
+                @click="mode = 'results'"
+                >Results</b-list-group-item
+              >
             </b-list-group>
           </b-list-group>
         </b-card>
       </b-col>
       <b-col cols="9">
-          <Results> Testi</Results>
+        <Results v-if="mode == 'results'"> Testi</Results>
 
         <b-card
-          v-if="customerselection"
-          :header="images ? 'Images' : 'General Information'"
+          v-if="mode =='img' || mode == 'gi'"
+          :header="mode == 'img' ? 'Images' : 'General Information'"
         >
           <b-form>
             <b-row>
@@ -62,7 +65,7 @@
               <b-col> </b-col>
             </b-row>
 
-            <div v-if="images">
+            <div v-if="mode == 'img'">
               <b-row class="mt-3">
                 <b-col></b-col>
                 <b-col><h3>Left Eye</h3></b-col>
@@ -71,10 +74,9 @@
               <b-row style="min-height: 300px">
                 <b-col class=""
                   ><div class="align-middle">Fundusphoto</div>
-                  
+
                   <b-button>Review</b-button>
-                  </b-col
-                >
+                </b-col>
                 <b-col class="m-1"
                   ><img src="/left-fundus.png" height="300px" width="300px"
                 /></b-col>
@@ -135,7 +137,7 @@
             </div>
           </b-form>
         </b-card>
-        <b-card v-else>
+        <b-card v-if="mode == 'cs'">
           <b-card-title>Customer selection</b-card-title>
 
           <b-form-row class="mb-3">
@@ -152,7 +154,7 @@
           <b-table :items="customers">
             <template #cell(name)="data">
               <div
-                @click="customerselection = !customerselection"
+                @click="mode = 'img'"
                 style="cursor: pointer"
               >
                 {{ data.value }}
@@ -170,15 +172,20 @@
 <script>
 import Results from "@/components/Results.vue";
 export default {
-  components: {Results},
+  components: { Results },
   data: () => ({
     uploaded: false,
-    customerselection: true,
+    customerselection: '38919',
     images: false,
+    mode: "cs",
     customers: [
       { name: "John Doe", date_of_birth: "4.6.1985", id: "38919" },
       { name: "Zula Rosenbaum", date_of_birth: "8.5.1989", id: "52952" },
+      { name: "Mallie Koelpin", date_of_birth: "13.3.1973", id: "81141" },
     ],
   }),
+  computed:{
+    
+  }
 };
 </script>
