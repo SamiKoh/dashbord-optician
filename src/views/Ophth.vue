@@ -5,22 +5,21 @@
         ><b-card class="m-0 p-0" header="Menu">
           <!-- <h4>Personal options</h4> -->
           <b-list-group flush>
-            <b-list-group-item>Personal information</b-list-group-item>
-            <b-list-group-item style="cursor: pointer" @click="mode = 'cs'"
+            <b-list-group-item class="pointer">Personal information</b-list-group-item>
+            <b-list-group-item class="pointer" @click="mode = 'cs'"
               >Select customer</b-list-group-item
             >
-            <b-list-group-item>
+            <b-list-group-item class="pointer">
               New customers
               <b-badge pill variant="info">3</b-badge>
             </b-list-group-item>
-            <!-- <b-list-group-item>John Doe</b-list-group-item>
-            <b-list-group-item>Jane Doe</b-list-group-item> -->
-            <b-list-group-item
+
+            <b-list-group-item class="pointer"
               >Messages
               <b-badge pill variant="danger">1</b-badge>
             </b-list-group-item>
-            <b-list-group-item>Calendar</b-list-group-item>
-            <b-list-group-item>Help</b-list-group-item>
+            <b-list-group-item class="pointer">Calendar</b-list-group-item>
+            <b-list-group-item class="pointer">Help</b-list-group-item>
           </b-list-group>
         </b-card>
 
@@ -36,14 +35,14 @@
             <b-list-group-item><b>Id:</b> {{ customer.id }}</b-list-group-item>
 
             <b-list-group flush>
-              <b-list-group-item style="cursor: pointer" @click="mode = 'gi'"
+              <b-list-group-item class="pointer" @click="mode = 'gi'"
                 >General information</b-list-group-item
               >
-              <b-list-group-item style="cursor: pointer" @click="mode = 'img'"
+              <b-list-group-item class="pointer" @click="mode = 'img'"
                 >Images</b-list-group-item
               >
               <b-list-group-item
-                style="cursor: pointer"
+                class="pointer"
                 @click="mode = 'results'"
                 >Results</b-list-group-item
               >
@@ -60,13 +59,13 @@
           :header="mode == 'img' ? 'Images' : 'General Information'"
         >
           <b-form>
-            <b-row>
+            <!-- <b-row>
               <b-col
                 ><h2>John Doe</h2>
                 <h3>Date of birth: 4.6.1985</h3>
               </b-col>
               <b-col> </b-col>
-            </b-row>
+            </b-row> -->
 
             <div v-if="mode == 'img'">
               <b-row class="mt-3">
@@ -81,29 +80,51 @@
                   <b-button>Review</b-button>
                 </b-col>
                 <b-col class="m-1"
-                  ><img :src="`${publicPath}left-fundus.jpg`" height="300px" width="300px"
+                  ><img
+                    :src="`${publicPath}left-fundus.jpg`"
+                    height="300px"
+                    width="300px"
                 /></b-col>
                 <b-col class="m-1">
-                  <img :src="`${publicPath}right-fundus.png`" height="300px" width="300px" />
+                  <img
+                    :src="`${publicPath}right-fundus.png`"
+                    height="300px"
+                    width="300px"
+                  />
                 </b-col>
               </b-row>
               <b-row style="min-height: 300px">
                 <b-col>Oct scan <b-button>Review</b-button></b-col>
 
                 <b-col class="m-1"
-                  ><img :src="`${publicPath}oct-left.png`" height="300px" width="300px" />
+                  ><img
+                    :src="`${publicPath}oct-left.png`"
+                    height="300px"
+                    width="300px"
+                  />
                 </b-col>
                 <b-col class="m-1"
-                  ><img :src="`${publicPath}oct-right.png`" height="300px" width="300px" />
+                  ><img
+                    :src="`${publicPath}oct-right.png`"
+                    height="300px"
+                    width="300px"
+                  />
                 </b-col>
               </b-row>
               <b-row style="min-height: 300px mb-3">
                 <b-col>Visualfield <b-button>Review</b-button></b-col>
                 <b-col class="m-1">
-                  <img :src="`${publicPath}view-left.png`" height="300px" width="300px" />
+                  <img
+                    :src="`${publicPath}view-left.png`"
+                    height="300px"
+                    width="300px"
+                  />
                 </b-col>
                 <b-col class="m-1"
-                  ><img :src="`${publicPath}view-right.png`" height="300px" width="300px"
+                  ><img
+                    :src="`${publicPath}view-right.png`"
+                    height="300px"
+                    width="300px"
                 /></b-col>
               </b-row>
               <!-- <b-form-group label="Comments">
@@ -213,3 +234,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.pointer{
+  cursor: pointer;
+}
+</style>
