@@ -53,9 +53,12 @@
       <b-col cols="9">
         <Results v-if="mode == 'results'"> Testi</Results>
 
+        <CustomerForm :disabled="true" v-if="mode == 'gi'"></CustomerForm>
+
+
         <b-card
           class="mb-5"
-          v-if="mode == 'img' || mode == 'gi'"
+          v-if="mode == 'img' "
           :header="mode == 'img' ? 'Images' : 'General Information'"
         >
           <b-form>
@@ -201,8 +204,9 @@
 
 <script>
 import Results from "@/components/Results.vue";
+import CustomerForm from "@/views/Home.vue";
 export default {
-  components: { Results },
+  components: { Results, CustomerForm },
   data: () => ({
     uploaded: false,
     customerselection: "",

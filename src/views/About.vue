@@ -5,28 +5,63 @@
         <b-card class="m-0 p-0" header="Menu">
           <!-- <h4>Personal options</h4> -->
           <b-list-group flush>
-            <b-list-group-item
-              style="cursor: pointer"
-              @click="customerselection = !customerselection"
+            <b-list-group-item style="cursor: pointer" @click="mode = 'cs'"
               >Select customer</b-list-group-item
             >
-            <b-list-group-item>Messages</b-list-group-item>
-            <b-list-group-item>Calendar</b-list-group-item>
-            <b-list-group-item>Help</b-list-group-item>
+            <b-list-group-item style="cursor: not-allowed"
+              >Create customer</b-list-group-item
+            >
+            <b-list-group-item style="cursor: not-allowed"
+              >Messages
+              <b-badge pill variant="danger">1</b-badge></b-list-group-item
+            >
+            <b-list-group-item style="cursor: not-allowed"
+              >Calendar</b-list-group-item
+            >
+            <b-list-group-item style="cursor: not-allowed"
+              >Help</b-list-group-item
+            >
           </b-list-group>
 
-          <div v-if="customerselection" style="margin-left: 50px">
+          <!-- <div v-if="customerselection" style="margin-left: 50px">
             <b-list-group flush>
               <b-list-group-item>General information</b-list-group-item>
               <b-list-group-item>Payments</b-list-group-item>
               <b-list-group-item>Upload pictures</b-list-group-item>
               <b-list-group-item>Progress</b-list-group-item>
             </b-list-group>
-          </div>
+          </div> -->
+        </b-card>
+        <b-card
+          class="m-0 mt-2 p-0"
+          header="Selected customer"
+          v-if="mode != 'cs'"
+        >
+          <b-list-group flush>
+            <b-list-group-item>
+              <b>Name:</b> {{ customer.name }}
+            </b-list-group-item>
+            <b-list-group-item><b>Id:</b> {{ customer.id }}</b-list-group-item>
+
+            <b-list-group flush>
+              <b-list-group-item class="pointer" @click="mode = 'gi'"
+                >General information</b-list-group-item
+              >
+              <b-list-group-item class="pointer" @click="mode = 'img'"
+                >Upload images</b-list-group-item
+              >
+              <b-list-group-item style="cursor: not-allowed" class="pointer"
+                >Payments</b-list-group-item
+              >
+              <b-list-group-item style="cursor: not-allowed" class="pointer"
+                >Progress</b-list-group-item
+              >
+            </b-list-group>
+          </b-list-group>
         </b-card>
       </b-col>
       <b-col cols="9">
-        <b-card v-if="customerselection">
+        <b-card v-if="mode == 'img'">
           <b-form>
             <b-row>
               <b-col
@@ -55,19 +90,15 @@
                   </b-form-row>
                 </b-form-group>
               </b-col>
-              <b-col
-                ><b-button variant="info" class="mr-3">Save</b-button>
-                <b-button variant="success">Submit</b-button>
-              </b-col>
             </b-row>
 
             <b-row class="mt-3">
-              <b-col></b-col>
+              <b-col class="col-2"></b-col>
               <b-col><h3>Left Eye</h3></b-col>
               <b-col><h3>Right Eye</h3></b-col>
             </b-row>
             <b-row style="min-height: 300px">
-              <b-col class=""
+              <b-col class="col-2"
                 ><div class="align-middle">Fundusphoto</div></b-col
               >
               <b-col class="m-1"
@@ -85,12 +116,16 @@
               </b-col>
             </b-row>
             <b-row style="">
-              <b-col>Oct scan</b-col>
-              <b-col class="img-drop m-1"> Drop image here </b-col>
-              <b-col class="img-drop m-1"> Drop image here </b-col>
+              <b-col class="col-2">Oct scan</b-col>
+              <b-col class="img-drop m-1"
+                ><b-form-file style=""></b-form-file
+              ></b-col>
+              <b-col class="img-drop m-1"
+                ><b-form-file style=""></b-form-file
+              ></b-col>
             </b-row>
             <b-row style="">
-              <b-col>Visualfield</b-col>
+              <b-col class="col-2">Visualfield</b-col>
               <b-col class="img-drop m-1"
                 ><b-form-file style=""></b-form-file
               ></b-col>
@@ -98,11 +133,15 @@
                 ><b-form-file style=""></b-form-file
               ></b-col>
             </b-row>
+
+            <b-form-row class="justify-content-center mt-4">
+              <b-button variant="info" class="mr-3">Save</b-button>
+              <b-button variant="success">Submit</b-button>
+            </b-form-row>
           </b-form>
         </b-card>
-        <b-card v-else>
+        <b-card v-if="mode == 'cs'">
           <b-card-title>Customer selection</b-card-title>
-
           <b-form-row class="mb-3">
             <b-form-input
               size="sm"
@@ -117,14 +156,18 @@
           <b-table :items="customers">
             <template #cell(name)="data">
               <div
-                @click="customerselection = !customerselection"
-                style="cursor: pointer"
+                @click="
+                  mode = 'img';
+                  selectCustomer(data);
+                "
+                class="pointer"
               >
                 {{ data.value }}
               </div>
             </template>
           </b-table>
         </b-card>
+        <customer-form :disabled="true" v-if="mode=='gi'"/>
       </b-col>
     </b-row>
   </b-container>
@@ -132,16 +175,34 @@
 
 
 <script>
+import CustomerForm from "@/views/Home.vue";
+
 export default {
+  components: { CustomerForm },
   data: () => ({
     uploaded: false,
-    publicPath:process.env.BASE_URL,
-    customerselection: true,
+    publicPath: process.env.BASE_URL,
+    customerselection: "",
+    mode: "cs",
     customers: [
       { name: "John Doe", date_of_birth: "4.6.1985", id: "38919" },
       { name: "Zula Rosenbaum", date_of_birth: "8.5.1989", id: "52952" },
     ],
   }),
+  methods: {
+    selectCustomer(data) {
+      console.log(data);
+      this.customerselection = data.item.id;
+    },
+  },
+  computed: {
+    customer() {
+      let c = this.customers.find((c) => c.id == this.customerselection);
+      console.log("searching customer with id ", this.customerselection, c);
+      if (c) return c;
+      else return this.customers[0];
+    },
+  },
 };
 </script>
 
